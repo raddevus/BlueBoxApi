@@ -26,7 +26,7 @@ class ServerConfiguration{
          ValidationErrors.Add($"LocalStorePath {LocalStorePath} doesn't exist."); 
       }
 
-      if (String.IsNullOrEmpty(ServerUri)){
+      if (ServerUri.IsNullOrEmpty()){
          ValidationErrors.Add($"ServerUri is blank. Please configure properly.");
       }
    }
