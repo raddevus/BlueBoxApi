@@ -1,7 +1,7 @@
 using System;
 namespace NewLibre;
 
-class ServerConfiguration{
+public class ServerConfiguration{
    public string AccountName{get;set;} // for user reminder
    public string ServerUri{get;set;}
    public string EmailAddress{get;set;}

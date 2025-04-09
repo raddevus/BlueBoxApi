@@ -5,9 +5,9 @@ using MimeKit;
 
 namespace NewLibre;
 
-class MailService: IMailService{
+public class MailService: IMailService{
    public ServerConfiguration Config{get;set;}
-   MailService(ServerConfiguration config){
+   public MailService(ServerConfiguration config){
       this.Config = config;
    }
 
@@ -17,5 +17,33 @@ class MailService: IMailService{
       var server = Config.ServerUri;
       var port = Config.Port;
       return 0;
+   }
+
+   public int GetInboxMsgCount(){
+      using (var client = new ImapClient())
+      {
+         try
+         {
+            // Connect to the mail server
+            client.Connect(Config.ServerUri, Config.Port, true);
+            // Authenticate
+            client.Authenticate(Config.EmailAddress, Config.Password);
+
+            Console.WriteLine("Successfully connected and authenticated.");
+
+            // Access the inbox
+            var inbox = client.Inbox;
+            inbox.Open(FolderAccess.ReadOnly);
+            var msgCount = inbox.Count;
+            Console.WriteLine($"You're inbox contains {msgCount} messages, ready for retrieval.");
+            // Disconnect
+            client.Disconnect(true);
+            return msgCount;
+         }
+         catch (Exception ex){
+            Console.WriteLine($"Failed! {ex.Message}");
+            return -1; // error return
+         }
+      }
    }
 }
