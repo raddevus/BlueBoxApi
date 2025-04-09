@@ -1,4 +1,7 @@
 using System;
+using MailKit.Net.Imap;
+using MailKit;
+using MimeKit;
 
 namespace NewLibre;
 
@@ -9,7 +12,10 @@ class MailService: IMailService{
    }
 
    public int GetMail(int numberOfMessages){
-      
-    return 0;
+      var email = Config.EmailAddress;
+      var password = Config.Password;
+      var server = Config.ServerUri;
+      var port = Config.Port;
+      return 0;
    }
 }
