@@ -24,8 +24,10 @@ public class MailService: IMailService{
       {
          try
          {
+            Console.WriteLine($"In GetInboxMsgCount...{Config.ServerUri}");
             // Connect to the mail server
             client.Connect(Config.ServerUri, Config.Port, true);
+            Console.WriteLine("Connected.");
             // Authenticate
             client.Authenticate(Config.EmailAddress, Config.Password);
 

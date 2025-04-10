@@ -18,6 +18,7 @@ public class MailServiceTests
       var server = File.ReadAllText(Path.Combine(AppContext.BaseDirectory.Split("bin")[0],"server.pwd"));
       Console.WriteLine($"server: {server}");
       ServerConfiguration sc = new(server, email, pwd, "./"); 
+      Console.WriteLine($"error count: {sc.ValidationErrors.Count}");
       MailService ms = new(sc);
       ms.GetInboxMsgCount();
     }

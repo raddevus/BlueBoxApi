@@ -13,10 +13,10 @@ public class ServerConfiguration{
    public List<string> ValidationErrors = new();
    
    public ServerConfiguration(string serverUri, string emailAddress, string password, string localStorePath){
-      ServerUri = serverUri;
-      EmailAddress = emailAddress;
-      Password = password;
-      LocalStorePath = localStorePath;
+      ServerUri = serverUri.Trim();
+      EmailAddress = emailAddress.Trim();
+      Password = password.Trim();
+      LocalStorePath = localStorePath.Trim();
       Validate();
    }
 
