@@ -22,6 +22,9 @@ public class ServerConfiguration{
 
    private void Validate(){
 
+      if (LocalStorePath.IsNullOrEmpty()){
+         ValidationErrors.Add($"LocalStorePath {LocalStorePath} cannot be empty. Please set a valid path.");
+         }
       if (!Directory.Exists(LocalStorePath)){
          ValidationErrors.Add($"LocalStorePath {LocalStorePath} doesn't exist."); 
       }

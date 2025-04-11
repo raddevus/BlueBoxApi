@@ -14,5 +14,9 @@ public class ServerConfigServiceTests
       Console.WriteLine($"server: {server}");
       ServerConfiguration sc = new(server, email, pwd, "./"); 
       Console.WriteLine($"error count: {sc.ValidationErrors.Count}");
+   
+   ServerConfigurationRepo scr = new();
+   ServerConfigService scs = new(scr);
+   scs.Save(sc);
    }
 }
