@@ -86,4 +86,38 @@ public class MailService: IMailService{
          }
       }
    }
+
+
+   public MimeKit.MimeMessage GetMessage(){
+      var email = Config.EmailAddress;
+      var password = Config.Password;
+      var server = Config.ServerUri;
+      var port = Config.Port;
+
+      MimeKit.MimeMessage message = null;
+      using (var client = new ImapClient())
+      {
+
+            client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
+          {
+              // Log errors for diagnostics
+              Console.WriteLine($"SSL Errors: {sslPolicyErrors}");
+              // Accept if you trust the server
+              return true;
+          };
+         client.Connect(server, port , true);
+          client.Authenticate(email, password);
+
+          var inbox = client.Inbox;
+
+
+          inbox.Open(FolderAccess.ReadOnly); // ReadOnly ensures no changes
+
+          // Fetch the first X messages
+          message = inbox.GetMessage(1);
+
+          client.Disconnect(true);
+      }
+      return message;
+   }
 }
