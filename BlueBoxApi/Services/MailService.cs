@@ -16,6 +16,36 @@ public class MailService: IMailService{
       var password = Config.Password;
       var server = Config.ServerUri;
       var port = Config.Port;
+
+      int numberToFetch = 10; // X messages
+
+      using (var client = new ImapClient())
+      {
+
+            client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
+          {
+              // Log errors for diagnostics
+              Console.WriteLine($"SSL Errors: {sslPolicyErrors}");
+              // Accept if you trust the server
+              return true;
+          };
+         client.Connect(server, port , true);
+          client.Authenticate(email, password);
+
+          var inbox = client.Inbox;
+
+
+          inbox.Open(FolderAccess.ReadOnly); // ReadOnly ensures no changes
+
+          // Fetch the first X messages
+          for (int i = 0; i < Math.Min(numberToFetch, inbox.Count); i++)
+          {
+              var message = inbox.GetMessage(i);
+              Console.WriteLine($"Subject: {message.Subject}");
+          }
+
+          client.Disconnect(true);
+      }
       return 0;
    }
 
