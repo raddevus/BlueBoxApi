@@ -24,6 +24,14 @@ public class MailService: IMailService{
       {
          try
          {
+
+            client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
+          {
+              // Log errors for diagnostics
+              Console.WriteLine($"SSL Errors: {sslPolicyErrors}");
+              // Accept if you trust the server
+              return true;
+          };
             Console.WriteLine($"In GetInboxMsgCount...{Config.ServerUri}");
             // Connect to the mail server
             client.Connect(Config.ServerUri, Config.Port, true);
