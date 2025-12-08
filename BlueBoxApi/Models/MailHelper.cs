@@ -25,7 +25,7 @@ public static class MailHelper
         Directory.CreateDirectory(directory);
 
         // Build timestamped filename
-        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string timestamp = message.Date.ToString("yyyyMMdd_HHmmss");
         string subjectSafe = string.Join("_", message.Subject?.Split(Path.GetInvalidFileNameChars()) ?? new string[] { "NoSubject" });
         string fileName = $"{timestamp}_{subjectSafe}.eml";
 

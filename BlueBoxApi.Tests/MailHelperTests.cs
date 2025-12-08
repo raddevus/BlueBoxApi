@@ -24,6 +24,6 @@ public class MailHelperTests{
       Console.WriteLine($"error count: {sc.ValidationErrors.Count}");
       MailService ms = new(sc);
       var message = ms.GetMessage(); 
-      MailHelper.SaveMessage(message, email);
+      MailHelper.SaveMessage(message, email.Split("@")[0]);
     }
 }
