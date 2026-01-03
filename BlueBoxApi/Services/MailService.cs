@@ -1,5 +1,6 @@
 using System;
 using MailKit.Net.Imap;
+using MailKit.Security;
 using MailKit;
 using MimeKit;
 
@@ -29,7 +30,7 @@ public class MailService: IMailService{
               // Accept if you trust the server
               return true;
           };
-         client.Connect(server, port , true);
+         client.Connect(server, port , SecureSocketOptions.SslOnConnect);
           client.Authenticate(email, password);
 
           var inbox = client.Inbox;
